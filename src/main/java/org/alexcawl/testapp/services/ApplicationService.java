@@ -27,6 +27,10 @@ public class ApplicationService {
         try {
             OffsetDateTime validTime = OffsetDateTime.parse(body.getUpdateDate());
             for (SystemItemImport item: body.getItems()) {
+                if (item.getId() == null) {
+                    throw new Exception();
+                }
+
                 if (item.getType() == SystemItemType.FOLDER) {
                     if (item.getUrl() != null || item.getSize() != null) {
                         throw new CustomValidationException();
@@ -36,7 +40,7 @@ public class ApplicationService {
                 }
 
                 if (item.getType() == SystemItemType.FILE) {
-                    if (item.getUrl() == null || item.getSize() == null) {
+                    if (item.getUrl() == null || item.getSize() == null || item.getSize() <= 0) {
                         throw new CustomValidationException();
                     }
                     if (item.getUrl().chars().filter(ch -> ch == '/').count() > 255) {
@@ -65,7 +69,7 @@ public class ApplicationService {
         }
     }
 
-    public SystemGraphOut getOperation(String id) throws ConstraintViolationException, ItemNotFoundException {
+    public GraphOfItems getOperation(String id) throws ConstraintViolationException, ItemNotFoundException {
         return getService.get(id);
     }
 }

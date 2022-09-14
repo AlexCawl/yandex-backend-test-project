@@ -19,7 +19,7 @@ public class DeleteService {
     @Resource
     private SystemItemRepository systemItemRepository;
 
-    private List <String> deepFirstSearch(SystemItem currentNode) {
+    private List <String> deepFirstDelete(SystemItem currentNode) {
         List <String> deleteList = new ArrayList<>();
 
         if (systemItemRepository.existsById(currentNode.getId())) {
@@ -33,7 +33,7 @@ public class DeleteService {
                 List<SystemItem> newNodesToCheck = systemItemRepository.findAllByParentId(currentNode.getId());
 
                 for (SystemItem newNode: newNodesToCheck) {
-                    deleteList.addAll(deepFirstSearch(newNode));
+                    deleteList.addAll(deepFirstDelete(newNode));
                 }
 
                 return deleteList;
@@ -49,15 +49,13 @@ public class DeleteService {
             throw new ItemNotFoundException();
         } else {
             String nodeParentID = myItemObject.get().getParentId();
-            while (nodeParentID != null) {
+            if (nodeParentID != null) {
                 SystemItem parentNode = systemItemRepository.findById(nodeParentID).get();
                 parentNode.updateDate(date);
                 systemItemRepository.save(parentNode);
-
-                nodeParentID = parentNode.getParentId();
             }
 
-            List<String> listToDelete = new ArrayList<>(deepFirstSearch(myItemObject.get()));
+            List<String> listToDelete = new ArrayList<>(deepFirstDelete(myItemObject.get()));
             systemItemRepository.deleteAllById(listToDelete);
         }
     }

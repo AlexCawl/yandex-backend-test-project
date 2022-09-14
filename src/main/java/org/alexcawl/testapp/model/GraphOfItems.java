@@ -18,7 +18,7 @@ import org.alexcawl.testapp.entities.SystemItem;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class SystemGraphOut {
+public class GraphOfItems {
   @JsonProperty("id")
   private String id;
 
@@ -38,9 +38,9 @@ public class SystemGraphOut {
   private Long size;
 
   @JsonProperty("children")
-  private List<SystemGraphOut> children = null;
+  private List<GraphOfItems> children = null;
 
-  public SystemGraphOut(SystemItem systemItem) {
+  public GraphOfItems(SystemItem systemItem) {
     this.id = systemItem.getId();
     this.url = systemItem.getUrl();
     this.date = systemItem.getDate().format(DateTimeFormatter.ISO_INSTANT);
@@ -49,14 +49,14 @@ public class SystemGraphOut {
     this.size = systemItem.getSize();
   }
 
-  public void addChildrenItem(SystemGraphOut childrenItem) {
+  public void addChildrenItem(GraphOfItems childrenItem) {
     if (this.children == null) {
       this.children = new ArrayList<>();
     }
     this.children.add(childrenItem);
   }
 
-  public SystemGraphOut merge(GraphAuxiliaryContainer container) {
+  public GraphOfItems merge(NodeResponse container) {
     if (this.getSize() == null) {
       this.size = container.getSize();
     } else {
@@ -68,4 +68,3 @@ public class SystemGraphOut {
     return this;
   }
 }
-//DateTimeFormatter

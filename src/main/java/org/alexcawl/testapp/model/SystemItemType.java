@@ -3,9 +3,7 @@ package org.alexcawl.testapp.model;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-/**
- * Тип элемента - папка или файл
- */
+
 public enum SystemItemType {
   FILE("FILE"),
     FOLDER("FOLDER");

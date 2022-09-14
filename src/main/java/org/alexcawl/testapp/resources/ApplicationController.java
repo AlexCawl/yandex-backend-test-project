@@ -32,12 +32,11 @@ public class ApplicationController {
             consumes = {"application/json"}
     )
     public ResponseEntity<?> importsRequest(@RequestBody SystemItemImportRequest body) {
-        log.info("importsRequest");
         try {
             applicationService.postOperation(body);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception error) { // VALIDATION EXCEPTION
-            return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(),
+        } catch (CustomValidationException error) {
+            return new ResponseEntity<>(new ApplicationError(HttpStatus.BAD_REQUEST.value(),
                     "Validation Failed"),
                     HttpStatus.BAD_REQUEST
             );
@@ -46,7 +45,7 @@ public class ApplicationController {
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Удаление прошло успешно."),
-            @ApiResponse(responseCode = "400", description = "Невалидная схема документа или входные данные не верны.", content = @Content(mediaType = "application/json", schema = @Schema(allOf = AppError.class))),
+            @ApiResponse(responseCode = "400", description = "Невалидная схема документа или входные данные не верны.", content = @Content(mediaType = "application/json", schema = @Schema(allOf = ApplicationError.class))),
             @ApiResponse(responseCode = "404", description = "Элемент не найден.", content = @Content(mediaType = "application/json")) })
     @DeleteMapping(value = "/delete/{id}",
             produces = {"application/json"}
@@ -55,13 +54,13 @@ public class ApplicationController {
         try {
             applicationService.deleteOperation(id, date);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (CustomValidationException error) { // VALIDATION EXCEPTION
-            return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(),
+        } catch (CustomValidationException error) {
+            return new ResponseEntity<>(new ApplicationError(HttpStatus.BAD_REQUEST.value(),
                     "Validation Failed"),
                     HttpStatus.BAD_REQUEST
             );
-        } catch (ItemNotFoundException error) { // ITEM NOT FOUND EXCEPTION
-            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),
+        } catch (ItemNotFoundException error) {
+            return new ResponseEntity<>(new ApplicationError(HttpStatus.NOT_FOUND.value(),
                     "Item not found"),
                     HttpStatus.NOT_FOUND
             );
@@ -77,19 +76,18 @@ public class ApplicationController {
             produces = {"application/json"}
     )
     public ResponseEntity<?> nodesRequest(@PathVariable("id") String id) {
-        log.info("nodesRequest");
         try {
-            SystemGraphOut out = applicationService.getOperation(id);
+            GraphOfItems out = applicationService.getOperation(id);
             return new ResponseEntity<>(out,
                     HttpStatus.OK
             );
-        } catch (ConstraintViolationException error) { // VALIDATION EXCEPTION
-            return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(),
+        } catch (ConstraintViolationException error) {
+            return new ResponseEntity<>(new ApplicationError(HttpStatus.BAD_REQUEST.value(),
                     "Validation Failed"),
                     HttpStatus.BAD_REQUEST
             );
-        } catch (ItemNotFoundException error) { // ITEM NOT FOUND EXCEPTION
-            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),
+        } catch (ItemNotFoundException error) {
+            return new ResponseEntity<>(new ApplicationError(HttpStatus.NOT_FOUND.value(),
                     "Item not found"),
                     HttpStatus.NOT_FOUND
             );

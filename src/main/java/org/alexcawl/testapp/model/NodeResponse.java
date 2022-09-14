@@ -1,7 +1,6 @@
 package org.alexcawl.testapp.model;
 
 import lombok.*;
-import org.alexcawl.testapp.entities.SystemItem;
 
 import java.time.OffsetDateTime;
 
@@ -11,11 +10,11 @@ import java.time.OffsetDateTime;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class GraphAuxiliaryContainer {
+public class NodeResponse {
     private Long size = 0L;
     private OffsetDateTime date;
 
-    public GraphAuxiliaryContainer(SystemGraphOut node) {
+    public NodeResponse(GraphOfItems node) {
         if (node.getSize() != null) {
             this.size = node.getSize();
         }

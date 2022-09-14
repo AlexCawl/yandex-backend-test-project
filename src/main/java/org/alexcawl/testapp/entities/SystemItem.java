@@ -1,7 +1,6 @@
 package org.alexcawl.testapp.entities;
 
 import lombok.*;
-import org.alexcawl.testapp.model.GraphAuxiliaryContainer;
 import org.alexcawl.testapp.model.SystemItemImport;
 import org.alexcawl.testapp.model.SystemItemType;
 
@@ -35,14 +34,6 @@ public class SystemItem {
         this.type = systemItemImport.getType();
         this.size = systemItemImport.getSize();
         this.date = date;
-    }
-
-    public void update(GraphAuxiliaryContainer container) {
-        if (this.size == null) {
-            this.size = 0L;
-        }
-        this.size += container.getSize();
-
     }
 
     public void updateDate(OffsetDateTime date) {
