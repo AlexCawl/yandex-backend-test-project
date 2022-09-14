@@ -1,5 +1,6 @@
 package org.alexcawl.testapp.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.alexcawl.testapp.dao.SystemItemRepository;
 import org.alexcawl.testapp.entities.SystemItem;
 import org.alexcawl.testapp.model.NodeResponse;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class GetService {
     @Resource
