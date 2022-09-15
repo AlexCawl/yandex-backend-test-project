@@ -1,6 +1,6 @@
 ## Yandex Test Application
 ***
-###Разработчик
+###Разработчик \
 GitHub: [AlexCawl](https://github.com/AlexCawl) \
 DockerHub: [alexcawl](https://hub.docker.com/u/alexcawl)
 ***
