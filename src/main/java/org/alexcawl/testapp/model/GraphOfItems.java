@@ -47,6 +47,9 @@ public class GraphOfItems {
     this.parentId = systemItem.getParentId();
     this.type = systemItem.getType();
     this.size = systemItem.getSize();
+    if (this.type == SystemItemType.FOLDER) {
+      this.children = new ArrayList<>();
+    }
   }
 
   public void addChildrenItem(GraphOfItems childrenItem) {
