@@ -1,5 +1,8 @@
 ## Yandex Test Application
-Разработчик: [AlexCawl](https://github.com/AlexCawl)
+***
+###Разработчик
+GitHub: [AlexCawl](https://github.com/AlexCawl) \
+DockerHub: [alexcawl](https://hub.docker.com/u/alexcawl)
 ***
 ### Используемые технологии и фреймворки
 * Java 11
